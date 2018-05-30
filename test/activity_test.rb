@@ -57,13 +57,13 @@ class ActivityTest < Minitest::Test
     bowling = Activity.new('Bowling', 90.00, 21.00)
     jill_attributes = {:name => 'Jill', :amount_paid => 30.00}
     jill = Participant.new(jill_attributes)
-    chris_attributes = {:name => 'Chris', :amount_paid => 55.00}
+    chris_attributes = {:name => 'Chris', :amount_paid => 68.00}
     chris = Participant.new(chris_attributes)
 
     bowling.add_participant(jill)
     bowling.add_participant(chris)
 
     assert_equal 36.00, bowling.participant_owed('Jill')
-    assert_equal 11.00, bowling.participant_owed('Chris')
+    assert_equal -2.00, bowling.participant_owed('Chris')
   end
 end
