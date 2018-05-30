@@ -19,4 +19,8 @@ class Activity
   def total_cost
     base_cost + (cost_per_participant * participants.length)
   end
+
+  def participant_fair_share
+    total_cost / participants.length
+  end
 end
