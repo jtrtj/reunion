@@ -26,4 +26,17 @@ class ActivityTest < Minitest::Test
     assert_equal 2, bowling.participants.length
     assert_equal 'Chris', bowling.participants.last.name
   end
+
+  def test_activity_knows_its_total_cost
+    bowling = Activity.new('Bowling', 90.00, 21.00)
+    jill_attributes = {:name => 'Jill', :amount_paid => 30.00}
+    jill = Participant.new(jill_attributes)
+    chris_attributes = {:name => 'Chris', :amount_paid => 55.00}
+    chris = Participant.new(chris_attributes)
+
+    bowling.add_participant(jill)
+    bowling.add_participant(chris)
+
+    assert_equal 132.00, bowling.total_cost
+  end
 end

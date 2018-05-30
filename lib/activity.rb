@@ -15,4 +15,8 @@ class Activity
   def add_participant(participant)
     @participants << participant
   end
+
+  def total_cost
+    base_cost + (cost_per_participant * participants.length)
+  end
 end
