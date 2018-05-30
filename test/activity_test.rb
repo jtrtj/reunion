@@ -24,7 +24,7 @@ class ActivityTest < Minitest::Test
     bowling.add_participant(chris)
 
     assert_equal 2, bowling.participants.length
-    assert_equal 'Chris', bowling.participants.last.name
+    assert_equal 'Chris', bowling.participants['Chris'].name
   end
 
   def test_activity_knows_its_total_cost
@@ -38,5 +38,32 @@ class ActivityTest < Minitest::Test
     bowling.add_participant(chris)
 
     assert_equal 132.00, bowling.total_cost
+  end
+
+  def test_activity_knows_each_participants_fair_share
+    bowling = Activity.new('Bowling', 90.00, 21.00)
+    jill_attributes = {:name => 'Jill', :amount_paid => 30.00}
+    jill = Participant.new(jill_attributes)
+    chris_attributes = {:name => 'Chris', :amount_paid => 55.00}
+    chris = Participant.new(chris_attributes)
+
+    bowling.add_participant(jill)
+    bowling.add_participant(chris)
+
+    assert_equal 66.00, bowling.participant_fair_share
+  end
+
+  def test_activity_knows_how_much_participant_owes_or_is_owed
+    bowling = Activity.new('Bowling', 90.00, 21.00)
+    jill_attributes = {:name => 'Jill', :amount_paid => 30.00}
+    jill = Participant.new(jill_attributes)
+    chris_attributes = {:name => 'Chris', :amount_paid => 68.00}
+    chris = Participant.new(chris_attributes)
+
+    bowling.add_participant(jill)
+    bowling.add_participant(chris)
+
+    assert_equal 36.00, bowling.participant_owed('Jill')
+    assert_equal -2.00, bowling.participant_owed('Chris')
   end
 end

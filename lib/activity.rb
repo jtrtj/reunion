@@ -9,14 +9,22 @@ class Activity
     @name = name
     @base_cost = base_cost
     @cost_per_participant = cost_per_participant
-    @participants = Array.new
+    @participants = Hash.new
   end
 
   def add_participant(participant)
-    @participants << participant
+    @participants[participant.name] = participant
   end
 
   def total_cost
     base_cost + (cost_per_participant * participants.length)
+  end
+
+  def participant_fair_share
+    total_cost / participants.length
+  end
+
+  def participant_owed(participant_name)
+    participant_fair_share - (participants[participant_name].amount_paid)
   end
 end
